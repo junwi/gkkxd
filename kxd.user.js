@@ -1,5 +1,6 @@
 ﻿if (location.host == "www.gkkxd.com" && location.protocol == "https:") {
 	if (location.href.indexOf("https://www.gkkxd.com/KXD/kxd/lcgl.shtml?action=getLCXXByPage") > -1) {
+		var o = {}
 		function requestPermission() {
 			webkitNotifications.requestPermission();
 		}
@@ -21,13 +22,17 @@
 			var tr = trs[i];
 			var tds = tr.getElementsByTagName('td');
 			var id = tds[0].innerText;
-			var duration = tds[6].innerText;
+			var duration = tds[4].innerText;
 			duration = duration.substring(0, duration.length - 2);
-			var interest = tds[7].innerText;
+			var interest = tds[5].innerText;
 			interest = interest.substring(0, interest.length - 1);
-			if (interest > 11 || duration < 9) {
+			if (interest >= 11 || (duration <= 6 && interest >= 10)) {
+				var url = tds[0].getElementsByTagName('a')[0]['href'];
+				if (o[url]) continue;
+				o[url] = 1;
 				notify('got', id + "\n" + duration + "\n" + interest);
 			}
+			console.log(id + "\n" + duration + "\n" + interest);
 		}
 		setTimeout(function () {
 			location.href = location.href;

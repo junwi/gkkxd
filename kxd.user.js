@@ -26,11 +26,13 @@
 			duration = duration.substring(0, duration.length - 2);
 			var interest = tds[5].innerText;
 			interest = interest.substring(0, interest.length - 1);
-			if (interest >= 11 || (duration <= 6 && interest >= 10)) {
+			if (interest >= 10 || (duration <= 6)) {
 				var url = tds[0].getElementsByTagName('a')[0]['href'];
 				if (o[url]) continue;
+				var gap = tds[2].innerText;
+				if (gap == '￥0') continue;
 				o[url] = 1;
-				notify('got', id + "\n" + duration + "\n" + interest);
+				notify('got', id + "\n" + duration + "\n" + interest + "\n" + gap);
 			}
 			console.log(id + "\n" + duration + "\n" + interest);
 		}
